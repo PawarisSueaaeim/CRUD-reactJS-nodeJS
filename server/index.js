@@ -43,7 +43,7 @@ app.post("/create", (req, res) => {
   );
 });
 
-app.put("/create", (req, res) => {
+app.put("/update", (req, res) => {
   const id = req.body.id;
   const wage = req.body.wage;
 
@@ -53,11 +53,23 @@ app.put("/create", (req, res) => {
     (err, row) => {
       if (err) {
         console.log(err);
-      } else if(row) {
+      } else if (row) {
         res.send(row);
       }
     }
   );
+});
+
+app.delete('/delete/:id', (req, res) => {
+  const id = req.params.id;
+
+  db.query("DELETE FROM employees WHERE id = ?", id, (err, row) => {
+    if (err) {
+        console.log(err);
+    }else if (row) {
+        res.send(row);
+    }
+  });
 });
 
 app.listen("3001", () => {
